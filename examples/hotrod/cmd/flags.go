@@ -29,6 +29,11 @@ var (
 	fixDBConnDisableMutex  bool
 	fixRouteWorkerPoolSize int
 
+	customerHost string
+	driverHost   string
+	frontendHost string
+	routeHost    string
+
 	customerPort int
 	driverPort   int
 	frontendPort int
@@ -36,6 +41,8 @@ var (
 
 	basepath string
 	jaegerUI string
+
+	otelExporterEndpoint string
 )
 
 const expvarDepr = "(deprecated, will be removed after 2024-01-01 or in release v1.53.0, whichever is later) "
@@ -49,6 +56,12 @@ func addFlags(cmd *cobra.Command) {
 	cmd.PersistentFlags().BoolVarP(&fixDBConnDisableMutex, "fix-disable-db-conn-mutex", "M", false, "Disables the mutex guarding db connection")
 	cmd.PersistentFlags().IntVarP(&fixRouteWorkerPoolSize, "fix-route-worker-pool-size", "W", 3, "Default worker pool size")
 
+	// Add flags to choose hostnames for services
+	cmd.PersistentFlags().StringVarP(&frontendHost, "frontend-service-host", "F", "0.0.0.0", "Host for frontend service")
+	cmd.PersistentFlags().StringVarP(&customerHost, "customer-service-host", "C", "0.0.0.0", "Host for customer service")
+	cmd.PersistentFlags().StringVarP(&driverHost, "driver-service-host", "P", "0.0.0.0", "Host for driver service")
+	cmd.PersistentFlags().StringVarP(&routeHost, "route-service-host", "R", "0.0.0.0", "Host for routing service")
+
 	// Add flags to choose ports for services
 	cmd.PersistentFlags().IntVarP(&customerPort, "customer-service-port", "c", 8081, "Port for customer service")
 	cmd.PersistentFlags().IntVarP(&driverPort, "driver-service-port", "d", 8082, "Port for driver service")
@@ -60,4 +73,6 @@ func addFlags(cmd *cobra.Command) {
 	cmd.PersistentFlags().StringVarP(&jaegerUI, "jaeger-ui", "j", "http://localhost:16686", "Address of Jaeger UI to create [find trace] links")
 
 	cmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "Enables debug logging")
+
+	cmd.PersistentFlags().StringVarP(&otelExporterEndpoint, "otel-exporter-endpoint", "o", "http://localhost:4318", "(NOT IMPLEMENTED) Use OTEL_EXPORTER_OTLP_ENDPOINT= env var instead")
 }
