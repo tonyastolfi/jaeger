@@ -74,5 +74,6 @@ func addFlags(cmd *cobra.Command) {
 
 	cmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "Enables debug logging")
 
-	cmd.PersistentFlags().StringVarP(&otelExporterEndpoint, "otel-exporter-endpoint", "o", "http://localhost:4318", "(NOT IMPLEMENTED) Use OTEL_EXPORTER_OTLP_ENDPOINT= env var instead")
+	cmd.PersistentFlags().StringVarP(&otelExporterEndpoint, "otel-exporter-endpoint", "o", "http://localhost:4318",
+		"(NOT IMPLEMENTED) Use OTEL_EXPORTER_OTLP_ENDPOINT= env var instead")
 }
